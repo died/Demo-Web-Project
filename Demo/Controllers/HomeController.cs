@@ -26,5 +26,10 @@ namespace Demo.Controllers
 
             return View();
         }
+
+        public ActionResult RadarChart()
+        {
+            return View();
+        }
     }
 }

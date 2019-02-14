@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using Demo.Models;
 using Demo.Providers;
 
 namespace Demo.Controllers
@@ -76,9 +77,28 @@ namespace Demo.Controllers
 
             return View(dt);
         }
+
+        public ActionResult CheckList()
+        {
+            var list = DemoProvider.GetDemoUsers();
+            return View(list);
+        }
+
+        [HttpPost]
+        public ActionResult CheckList(List<DemoUser> list)
+        {
+            
+            foreach (var item in list)
+            {
+                //save things
+            }
+            return View(list);
+        }
     }
 
 }
+
+
 
 public static class PivotClass
 {

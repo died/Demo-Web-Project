@@ -4,11 +4,18 @@ using System.Linq;
 using System.Reflection;
 using Demo.EF;
 using Demo.Extend;
+using Demo.Models;
 
 namespace Demo.Providers
 {
     public class DemoProvider
     {
+        public static List<DemoUser> TempUsers = new List<DemoUser>
+        {
+            new DemoUser{Si = 1,Name = "Almira Antón"},
+            new DemoUser{Si = 2,Name = "Eleni Marjan"}
+        };
+
         public static List<DemoProduct> GetProducts()
         {
             try
@@ -43,5 +50,19 @@ namespace Demo.Providers
             }
         }
 
+        public static List<DemoUser> GetDemoUsers()
+        {
+            return TempUsers;
+        }
+
+        public static bool SetDemoUsers(DemoUser du)
+        {
+            return false;
+        }
+
+        public static List<string> GetHobbyList()
+        {
+            return new List<string>{"Hiking","Surfing","Biking"};
+        }
     }
 }

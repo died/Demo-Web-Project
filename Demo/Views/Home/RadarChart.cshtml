@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "RadarChart";
+    Layout = null;
+}
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" type="text/css" />
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+    #content {
+        width: 80%;
+        margin-left: 10%;
+        align-content: center;
+    }
+    .input {
+        max-width: 2.4em;
+        width: 2.4em;
+        text-align: center;
+    }
+    .input, .label {
+        display: block;
+        text-align: center;
+    }
+    .container {
+        text-align: center;
+    }
+    .control {
+        display: inline;
+        padding: 5px;
+        float: left;
+    }
+    .field {
+        text-align: center;
+        display: inline-block;
+    }
+    .vtext {
+        writing-mode: vertical-rl;
+        /*text-orientation: upright;*/
+    }
+    .limitTh {
+        width: 1.3em;
+    }
+</style>
+<div id="app">
+    <section class="hero">
+        <div class="hero-head">
+            <div class="container">
+                <h1 class="title">
+                    Personality and Preference Inventory - Result Chart | 感知與偏好量表 - 結果圖表
+                </h1>
+                <h2 class="subtitle">
+                    The Personality and Preference Inventory (PAPI) was originally designed by Dr Max Kostick, Professor of Industrial Psychology at Boston State College, in Massachusetts, USA, in the early 1960s.
+                </h2>
+            </div>
+        </div>
+        <div class="hero-body">
+
+            <div class="container">
+
+                <div class="columns is-multiline is-mobile is-centered">
+                    <div class="column is-full">
+                        <div class="field">
+                            <div class="control" v-for="input in inputList">
+                                <label :for="input.name" class="label">{{input.name}}</label>
+                                <input v-on:keyup="autoTab($event.target)" :id="input.name" class="input" type="text" maxlength="1" :placeholder="input.name" :title="input.name" v-model="input.value">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-half">
+                        <div id="chartdiv"></div>
+                    </div>
+                    <div class="column is-one-quarter">
+                        <table class="table is-bordered">
+                            <tr>
+                                <th rowspan="3" class="limitTh"><span>輸出精力</span></th>
+                                <td>a 意志力</td>
+                                <th rowspan="4"class="limitTh">
+                                    <p>社交能力</p></th>
+                                <td>d 表現慾</td>
+                            </tr>
+                            <tr>
+                                <td>A 投注性</td>
+                                <td>F 社交性</td>
+                            </tr>
+                            <tr>
+                                <td>b 成就需求</td>
+                                <td>e 合群性</td>
+                            </tr>
+                            <tr>
+                                <th rowspan="3"class="limitTh">
+                                    <p>領導能力</p></th>
+                                <td>B 領導性</td>
+                                <td>f 親和需求</td>
+                            </tr>
+                            <tr>
+                                <td>c 統御需求</td>
+                                <th rowspan="3"class="limitTh">
+                                    <p>工作調整能力</p></th>
+                                <td>G 思考性</td>
+                            </tr>
+                            <tr>
+                                <td>C 冒險性</td>
+                                <td>H 細緻性</td>
+                            </tr>
+                            <tr>
+                                <th rowspan="2"class="limitTh">
+                                    <p>生活步調</p></th>
+                                <td>D 迅速性</td>
+                                <td>I 條理性</td>
+                            </tr>
+                            <tr>
+                                <td>E 活動性</td>
+                                <th rowspan="3"class="limitTh">
+                                    <p>情緒穩定</p></th>
+                                <td>g 喜新性(*)</td>
+                            </tr>
+                            <tr>
+                                <th rowspan="2"class="limitTh">
+                                    <p>服從性</p></th>
+                                <td>i 崇拜性</td>
+                                <td>J 穩定性</td>
+                            </tr>
+                            <tr>
+                                <td>j 受役性</td>
+                                <td>h 批判性(*)</td>
+                            </tr>
+                        </table>
+                        <span>* : g h Reversed on chart.</span>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/radar.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script>
+    var chart = AmCharts.makeChart("chartdiv", {
+        "type": "radar",
+        "theme": "light",
+        "valueAxes": [{
+            "axisTitleOffset": 20,
+            "minimum": 0,
+            "axisAlpha": 0.15
+        }],
+        "startDuration": 2,
+        "graphs": [{
+            "balloonText": "[[value]] litres of beer per year",
+            "bullet": "round",
+            "lineThickness": 2,
+            "valueField": "value"
+        }],
+        "categoryField": "name",
+        "export": {
+            "enabled": false
+        }
+    });
+    var App;
+    App = new Vue({
+        el: "#app",
+        data: {
+            inputList: [
+                { name: "A", value: null }, { name: "B", value: null },
+                { name: "C", value: null }, { name: "D", value: null },
+                { name: "E", value: null }, { name: "F", value: null },
+                { name: "G", value: null }, { name: "H", value: null },
+                { name: "I", value: null }, { name: "J", value: null },
+                { name: "a", value: null }, { name: "b", value: null },
+                { name: "c", value: null }, { name: "d", value: null },
+                { name: "e", value: null }, { name: "f", value: null },
+                { name: "g", value: null }, { name: "h", value: null },
+                { name: "i", value: null }, { name: "j", value: null }
+            ],
+            order: ["A", "b", "B", "c", "C", "D", "E", "d", "F", "e", "f", "G", "H", "I", "g", "J", "h", "i", "j","a"]
+        },
+        mounted: function() {
+            //this.queryMonths();
+            //this.adjustWindow();
+
+        },
+        watch: {
+            inputList: {
+                handler: function(val, oldVal) {
+                    this.fillChart();
+                },
+                deep: true
+            }
+        },
+        methods: {
+            fillChart: function () {
+                let list = this.orderList();
+                chart.dataProvider = list;//this.inputList;
+                chart.validateData();
+            },
+            orderList: function () {
+                let list = [];
+                this.order.forEach(function (id) {
+                    let node = App.inputList.find(x => x.name === id);
+                    let local = { name: node.name, value: node.value };
+                    //if g or h 
+                    if (local.name === 'g' || local.name === 'h') {
+                        local.value = local.value > 0 ? 9 - local.value : null;
+                    }
+                    list.push(local);
+                });
+                return list;
+            },
+            autoTab: function (e) {
+                if (e.value.length === e.maxLength) {
+                    if (e.id === 'j')
+                        e.blur();
+                    else {
+                        var next = e.parentElement.nextSibling.firstChild;
+                        next.focus();
+                    }
+                        
+                }
+            }
+        }
+    });
+</script>

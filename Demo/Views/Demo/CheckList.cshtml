@@ -1,0 +1,47 @@
+﻿@using Demo.Providers
+@model List<Demo.Models.DemoUser>
+@{
+    ViewBag.Title = "CheckList";
+    var hobby = DemoProvider.GetHobbyList().Select(x => new SelectListItem
+    {
+        Text = x, Value = x
+    }).ToList();
+}
+
+<div class="container-fluid" id="app">
+@using (Html.BeginForm("CheckList", "Demo", FormMethod.Post, new {@class = "form"}))
+{
+    <table>
+        <thead><tr><th>Name</th><th>Hobby</th></tr></thead>
+        <tbody>
+        @for (var i=0;i<Model.Count;i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(x => Model[i].Si)
+                    @Html.HiddenFor(x => Model[i].Name)
+                    @Html.LabelFor(x => Model[i].Name, Model[i].Name)
+                </td>
+                <td>
+                    <ul class="list-inline">
+                        @foreach (var h in hobby)
+                        {
+                            var check = Model[i].Hobby != null && (Model[i].Hobby.Contains(h.Value));
+                            <li >
+                                <input type="checkbox" value="@h.Value" name="[@i].Hobby" @check>
+                                <label>@h.Text</label>
+                            </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+    <div class="form-group text-center">
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </div>
+}
+</div>
+
