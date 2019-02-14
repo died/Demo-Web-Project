@@ -70,8 +70,8 @@ namespace Demo.Controllers
                     row[m] = value;
                     sum += value;
                 }
-                dt.Rows.Add(row);
                 row["Sum"] = sum;
+                dt.Rows.Add(row);
             }
             #endregion
 
