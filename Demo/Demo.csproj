@@ -248,6 +248,8 @@
     <Content Include="Views\Demo\LinqPivot.cshtml" />
     <Content Include="Views\Home\RadarChart.cshtml" />
     <Content Include="Views\Demo\CheckList.cshtml" />
+    <Content Include="Views\Demo\Index.cshtml" />
+    <Content Include="Views\Demo\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

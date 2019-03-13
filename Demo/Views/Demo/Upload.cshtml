@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    var list = new List<string>();
+    if (ViewBag.NameList != null)
+    {
+        list = (List<string>)ViewBag.NameList;
+    }
+}
+
+
+<h2>Upload</h2>
+@using (Html.BeginForm("Upload", "Demo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" id="file" name="file" multiple="multiple" class="btn btn-primary">
+    <input type="submit" class="btn btn-outline-primary" value="Submit" />
+}
+
+<h2>Result</h2>
+@foreach (var line in list)
+{
+    <span>@line</span><br />
+}

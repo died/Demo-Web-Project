@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
 using System.Web.Mvc;
 using Demo.Models;
 using Demo.Providers;
@@ -11,6 +12,16 @@ namespace Demo.Controllers
 {
     public class DemoController : Controller
     {
+        public ActionResult Index()
+        {
+
+            return View();
+        }
+
+        public ActionResult Redir()
+        {
+            return RedirectToAction("Index", "Demo", new { SelectedClassification = "test" });
+        }
         /// <summary>
         /// Using pivot extension to create datatable with one key
         /// </summary>
@@ -70,8 +81,8 @@ namespace Demo.Controllers
                     row[m] = value;
                     sum += value;
                 }
-                row["Sum"] = sum;
                 dt.Rows.Add(row);
+                row["Sum"] = sum;
             }
             #endregion
 
@@ -93,6 +104,31 @@ namespace Demo.Controllers
                 //save things
             }
             return View(list);
+        }
+
+        [HttpGet]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase dummy)
+        {
+            var nameList = new List<string>();
+            if (Request.Files.Count > 0)
+            {
+                for (var i=0;i<Request.Files.Count;i++)
+                {
+                    HttpPostedFileBase file = Request.Files[i];
+                    
+                    if(file!=null)
+                        nameList.Add($"{file.FileName}\tLength:{file.ContentLength}\tType:{file.ContentType}");
+                }
+            }
+
+            ViewBag.NameList = nameList;
+            return View();
         }
     }
 
